@@ -1,7 +1,5 @@
-
 const Hero = () => {
-  return (
-    <section className="bg-black text-white pt-32 pb-20 md:pt-40 md:pb-32">
+  return <section className="bg-black text-white pt-32 pb-20 md:pt-40 md:pb-32">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl mx-auto md:mx-0">
           <p className="text-sm md:text-base mb-8 max-w-xs">
@@ -14,7 +12,7 @@ const Hero = () => {
             <span className="relative">
               digital
               <svg className="absolute -bottom-2 w-full" viewBox="0 0 300 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1,15 C50,5 100,25 150,15 C200,5 250,15 299,8" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                <path d="M1,15 C50,5 100,25 150,15 C200,5 250,15 299,8" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
               </svg>
             </span>
             <br />
@@ -22,17 +20,11 @@ const Hero = () => {
           </h1>
           
           <div className="text-sm md:text-base max-w-md ml-auto">
-            <p className="mb-4">
-              We help businesses transform through technology with custom software development, web applications, and mobile apps tailored to your needs.
-            </p>
-            <p>
-              Let's bring your vision to life with solutions that drive growth and efficiency.
-            </p>
+            
+            
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;

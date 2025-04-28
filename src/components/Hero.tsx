@@ -1,15 +1,21 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { 
   Carousel, 
   CarouselContent, 
   CarouselItem, 
   CarouselPrevious, 
-  CarouselNext 
+  CarouselNext,
+  useCarousel
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import AnimatedIllustration from "@/components/ui/carousel/AnimatedIllustration";
+import Autoplay from "embla-carousel-autoplay";
 
 const Hero = () => {
+  const [api, setApi] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   // Animation for content appearing on scroll
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -34,28 +40,55 @@ const Hero = () => {
     };
   }, []);
 
+  // Update current slide index when carousel changes
+  useEffect(() => {
+    if (!api) return;
+
+    const onSelect = () => {
+      setCurrentIndex(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
   const services = [
     {
       title: "Web Development",
       description: "Custom websites and applications",
-      bgColor: "bg-black"
+      bgColor: "bg-black",
+      type: "web" as const
     },
     {
       title: "UI/UX Design",
       description: "Intuitive user experiences",
-      bgColor: "bg-zinc-900"
+      bgColor: "bg-zinc-900",
+      type: "uiux" as const
     },
     {
       title: "Mobile Apps",
       description: "iOS and Android solutions",
-      bgColor: "bg-black"
+      bgColor: "bg-black",
+      type: "mobile" as const
     },
     {
       title: "Custom Software",
       description: "Tailored to your needs",
-      bgColor: "bg-zinc-900"
+      bgColor: "bg-zinc-900",
+      type: "software" as const
     }
   ];
+
+  // Configure autoplay plugin
+  const autoplayPlugin = Autoplay({
+    delay: 4000,
+    stopOnInteraction: false,
+    stopOnMouseEnter: true,
+  });
 
   return (
     <section className="bg-black text-white pt-32 pb-20 md:pt-40 md:pb-32">
@@ -81,27 +114,30 @@ const Hero = () => {
           </div>
           
           <div className="relative w-full aspect-square max-w-2xl mx-auto md:mx-0 animate-on-scroll">
-            <Carousel className="w-full">
+            <Carousel
+              className="w-full"
+              setApi={setApi}
+              plugins={[autoplayPlugin]}
+              opts={{
+                loop: true,
+              }}
+            >
               <CarouselContent>
                 {services.map((service, index) => (
                   <CarouselItem key={index}>
                     <div className={cn(
-                      "flex flex-col h-full aspect-square rounded-lg p-8 text-white",
-                      service.bgColor
+                      "flex flex-col h-full aspect-square rounded-lg p-8 text-white transition-all duration-500",
+                      service.bgColor,
+                      "hover:shadow-lg hover:shadow-white/10"
                     )}>
-                      <div className="mb-4 p-6 rounded-full bg-white/10 w-16 h-16 flex items-center justify-center">
-                        <span className="text-2xl">
-                          {index === 0 && "🌐"}
-                          {index === 1 && "🎨"}
-                          {index === 2 && "📱"}
-                          {index === 3 && "💻"}
-                        </span>
+                      <div className="mb-4 p-6 rounded-full w-40 h-40 mx-auto">
+                        <AnimatedIllustration type={service.type} />
                       </div>
                       
-                      <h3 className="text-2xl font-display font-bold mb-2">
+                      <h3 className="text-2xl font-display font-bold mb-2 text-center">
                         {service.title}
                       </h3>
-                      <p className="text-gray-300">
+                      <p className="text-gray-300 text-center">
                         {service.description}
                       </p>
                       
@@ -118,9 +154,26 @@ const Hero = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <div className="flex justify-end gap-2 mt-4">
-                <CarouselPrevious className="relative -left-0 bg-white/10 hover:bg-white/20 border-none text-white" />
-                <CarouselNext className="relative -right-0 bg-white/10 hover:bg-white/20 border-none text-white" />
+              <div className="flex flex-col gap-4 mt-4">
+                <div className="flex justify-center gap-2 mb-2">
+                  {services.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => api?.scrollTo(index)}
+                      className={cn(
+                        "w-2.5 h-2.5 rounded-full transition-all",
+                        currentIndex === index 
+                          ? "bg-white scale-125" 
+                          : "bg-white/30 hover:bg-white/50"
+                      )}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                <div className="flex justify-end gap-2">
+                  <CarouselPrevious className="relative -left-0 bg-white/10 hover:bg-white/20 border-none text-white" />
+                  <CarouselNext className="relative -right-0 bg-white/10 hover:bg-white/20 border-none text-white" />
+                </div>
               </div>
             </Carousel>
           </div>

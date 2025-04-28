@@ -1,6 +1,7 @@
 
 import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
 import { CarouselContext } from "./carousel-context";
 import type { CarouselApi, CarouselProps } from "./types";
@@ -11,13 +12,14 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
       orientation = "horizontal",
       opts,
       setApi,
-      plugins,
+      plugins = [],
       className,
       children,
       ...props
     },
     ref
   ) => {
+    // Add autoplay plugin to plugins array if it doesn't already include it
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,

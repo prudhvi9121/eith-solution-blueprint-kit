@@ -14,18 +14,26 @@ const Portfolio = () => {
     },
     { 
       id: 2, 
-      title: "Smart Analytics",
-      category: "Business Intelligence",
-      description: "Data-driven decision platform",
+      title: "Pay Bill",
+      category: "Business Management",
+      description: "Maintained transactions and bussiness analaytics",
       imageUrl: "/portfolio2.png",
       placeholderColor: "bg-purple-100" // Uncommented this line
     },
     { 
       id: 3, 
-      title: "HealthTech Suite",
-      category: "Healthcare",
-      description: "Patient management system",
-      imageUrl: "/placeholder.svg",
+      title: "LP Rail",
+      category: "Finance",
+      description: "Inhouse finance management",
+      imageUrl: "/portfolio3.png",
+      placeholderColor: "bg-green-100"
+    },
+    { 
+      id: 4, 
+      title: "Avenues Global School",
+      category: "Education",
+      description: "Modern Landing page for Avenus school",
+      imageUrl: "/portfolio4.png",
       placeholderColor: "bg-green-100"
     }
   ];

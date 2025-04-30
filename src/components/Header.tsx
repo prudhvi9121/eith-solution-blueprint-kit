@@ -18,8 +18,8 @@ const Header = () => {
           <a href="#services" className="text-sm font-medium hover:underline">Services</a>
           <a href="#approach" className="text-sm font-medium hover:underline">Our Approach</a>
           <a href="#portfolio" className="text-sm font-medium hover:underline">Portfolio</a>
-          <a href="#team" className="text-sm font-medium hover:underline">Team</a>
-          <a href="#news" className="text-sm font-medium hover:underline">News</a>
+          {/* <a href="#team" className="text-sm font-medium hover:underline">Team</a>
+          <a href="#news" className="text-sm font-medium hover:underline">News</a> */}
         </nav>
         
         <div className="hidden md:flex items-center">
@@ -54,8 +54,8 @@ const Header = () => {
             <a href="#services" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>Services</a>
             <a href="#approach" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>Our Approach</a>
             <a href="#portfolio" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>Portfolio</a>
-            <a href="#team" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>Team</a>
-            <a href="#news" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>News</a>
+            {/* <a href="#team" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>Team</a>
+            <a href="#news" className="text-sm font-medium hover:underline" onClick={() => setIsMenuOpen(false)}>News</a> */}
             <Button variant="default" size="sm" className="w-full">
               <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact Us</a>
             </Button>

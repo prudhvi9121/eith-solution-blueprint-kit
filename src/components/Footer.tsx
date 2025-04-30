@@ -1,52 +1,103 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
 const Footer = () => {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
+
   return (
-    <footer id="contact" className="bg-black text-white py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
-          <div>
-            <h3 className="text-lg font-display font-bold mb-6">Eith.</h3>
+    <footer id="contact" className="relative bg-gradient-to-b from-gray-900 to-black text-white py-20 md:py-32 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)]" style={{ backgroundSize: '24px 24px' }}></div>
+      </div>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-red-500/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-3xl -z-10" />
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8"
+        >
+          {/* Brand Column */}
+          <motion.div {...fadeInUp}>
+            <h3 className="text-2xl font-display font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              Eith<span className="text-red-500">.</span>
+            </h3>
             <nav className="space-y-4">
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Home</a>
-              <a href="#services" className="block text-sm text-white/70 hover:text-white">Services</a>
-              <a href="#portfolio" className="block text-sm text-white/70 hover:text-white">Portfolio</a>
-              <a href="#team" className="block text-sm text-white/70 hover:text-white">Team</a>
+              {["Home", "Services", "Portfolio", "Team"].map((item, index) => (
+                <motion.a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className="block text-sm text-white/70 hover:text-white transition-colors duration-200 hover:translate-x-1 transform"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  {item}
+                </motion.a>
+              ))}
             </nav>
-          </div>
+          </motion.div>
           
-          <div>
-            <h3 className="text-lg font-display font-bold mb-6">Our Offerings</h3>
+          {/* Offerings Column */}
+          <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
+            <h3 className="text-lg font-display font-bold mb-6 relative inline-block">
+              Our Offerings
+              <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-red-500/50 rounded-full"></span>
+            </h3>
             <nav className="space-y-4">
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Web Development</a>
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Mobile Apps</a>
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Custom Software</a>
-              <a href="#" className="block text-sm text-white/70 hover:text-white">UX/UI Design</a>
+              {["Web Development", "Mobile Apps", "Custom Software", "UX/UI Design"].map((item) => (
+                <a key={item}  className="block text-sm text-white/70 hover:text-white transition-colors duration-200 hover:translate-x-1 transform">
+                  {item}
+                </a>
+              ))}
             </nav>
-          </div>
+          </motion.div>
           
-          <div>
-            <h3 className="text-lg font-display font-bold mb-6">Connect With Us</h3>
+          {/* Connect Column */}
+          <motion.div {...fadeInUp} transition={{ delay: 0.3 }}>
+            <h3 className="text-lg font-display font-bold mb-6 relative inline-block">
+              Connect With Us
+              <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-red-500/50 rounded-full"></span>
+            </h3>
             <nav className="space-y-4">
-              <a href="#contact" className="block text-sm text-white/70 hover:text-white">Contact</a>
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Careers</a>
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Support</a>
-              <a href="#" className="block text-sm text-white/70 hover:text-white">Privacy Policy</a>
+              {["Contact", "Careers", "Support", "Privacy Policy"].map((item) => (
+                <a key={item} href="#" className="block text-sm text-white/70 hover:text-white transition-colors duration-200 hover:translate-x-1 transform">
+                  {item}
+                </a>
+              ))}
             </nav>
-          </div>
+          </motion.div>
           
-          <div>
-            <h3 className="text-lg font-display font-bold mb-6">Get all the latest insights.</h3>
+          {/* Newsletter Column */}
+          <motion.div {...fadeInUp} transition={{ delay: 0.4 }}>
+            <h3 className="text-lg font-display font-bold mb-6 relative inline-block">
+              Get all the latest insights
+              <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-red-500/50 rounded-full"></span>
+            </h3>
             <form className="space-y-4">
               <div className="flex flex-col space-y-2">
-                <Input 
-                  type="email" 
-                  placeholder="Email address" 
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                />
-                <Button type="submit" className="w-full">
+                <div className="relative group">
+                  <Input 
+                    type="email" 
+                    placeholder="Email address" 
+                    className="bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:border-red-500/50 focus:ring-1 focus:ring-red-500/50 transition-all duration-200"
+                  />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-red-500/20 to-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+                </div>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold transition-all duration-200"
+                >
                   Subscribe
                 </Button>
               </div>
@@ -54,34 +105,79 @@ const Footer = () => {
                 By subscribing, you agree to our Terms of Service and Privacy Policy.
               </p>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         
-        <div className="mt-16 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center">
+        {/* Footer Bottom */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center"
+        >
           <p className="text-sm text-white/50 mb-4 md:mb-0">
             © {new Date().getFullYear()} Eith. All rights reserved.
           </p>
           
           <div className="flex space-x-6">
-            <a href="#" aria-label="Twitter" className="text-white/70 hover:text-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 4.01001C21 4.50001 20.02 4.87001 19 5.09001C17.879 3.87501 16.119 3.80001 14.95 4.91001C13.78 6.02001 13.34 7.77001 13.89 9.32001C10.21 9.16001 6.93 7.55001 4.5 4.67001C4 5.57001 3.83 6.62001 4.05 7.62001C4.26 8.62001 4.85 9.49001 5.66 10.0087C5.01 9.99001 4.37 9.81001 3.8 9.48001V9.54001C3.8 11.6487 5.22 13.4487 7.2 13.9C6.6 14.07 5.97 14.0987 5.36 14.0C5.63 14.893 6.17 15.674 6.91 16.236C7.65 16.798 8.55 17.114 9.48 17.1387C7.67754 18.7257 5.3968 19.5597 3 19.5887C2.67 19.5887 2.34 19.5687 2 19.5287C4.44 21.1628 7.28 22.0207 10.17 22.0187" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-            <a href="#" aria-label="Instagram" className="text-white/70 hover:text-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M16 2H8C4.68629 2 2 4.68629 2 8V16C2 19.3137 4.68629 22 8 22H16C19.3137 22 22 19.3137 22 16V8C22 4.68629 19.3137 2 16 2Z" stroke="currentColor" strokeWidth="2"/>
-                <path d="M17.5 6.5L17.51 6.49" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-            <a href="#" aria-label="LinkedIn" className="text-white/70 hover:text-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8ZM6 9H2V21H6V9ZM4 6C4.53043 6 5.03914 5.78929 5.41421 5.41421C5.78929 5.03914 6 4.53043 6 4C6 3.46957 5.78929 2.96086 5.41421 2.58579C5.03914 2.21071 4.53043 2 4 2C3.46957 2 2.96086 2.21071 2.58579 2.58579C2.21071 2.96086 2 3.46957 2 4C2 4.53043 2.21071 5.03914 2.58579 5.41421C2.96086 5.78929 3.46957 6 4 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
+            {[
+              {
+                name: 'Instagram',
+                href: 'https://www.instagram.com/eithhq/',
+                icon: (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                )
+              },
+              {
+                name: 'Facebook',
+                href: '#',
+                icon: (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                )
+              },
+              {
+                name: 'YouTube',
+                href: 'https://www.youtube.com/@EithOfficial',
+                icon: (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                )
+              },
+              {
+                name: 'LinkedIn',
+                href: '#',
+                icon: (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                )
+              },
+              {
+                name: 'X',
+                href: 'https://x.com/eithhq',
+                icon: (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                )
+              }
+            ].map((platform) => (
+              <a
+                key={platform.name}
+                href={platform.href}
+                aria-label={platform.name}
+                className="text-white/70 hover:text-white transition-colors duration-200 hover:scale-110 transform"
+              >
+                {platform.icon}
+              </a>
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

@@ -9,6 +9,7 @@ import Portfolio from "@/components/Portfolio";
 import Team from "@/components/Team";
 import News from "@/components/News";
 import Footer from "@/components/Footer";
+import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
@@ -18,11 +19,13 @@ const Index = () => {
         <Hero />
         <Services />
         <Approach />
-        <Locations />
-        <JoinUs />
+        {/* <Locations /> */}
+        
         <Portfolio />
-        <Team />
-        <News />
+        {/* <JoinUs /> */}
+          {/* <Team />
+          <News /> */}
+          <Contact />
       </main>
       <Footer />
     </div>

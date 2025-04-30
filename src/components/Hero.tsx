@@ -1,21 +1,8 @@
-
 import { useEffect, useState } from "react";
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselPrevious, 
-  CarouselNext,
-  useCarousel
-} from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import AnimatedIllustration from "@/components/ui/carousel/AnimatedIllustration";
-import Autoplay from "embla-carousel-autoplay";
+import { motion } from "framer-motion";
 
 const Hero = () => {
-  const [api, setApi] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   // Animation for content appearing on scroll
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -40,145 +27,156 @@ const Hero = () => {
     };
   }, []);
 
-  // Update current slide index when carousel changes
-  useEffect(() => {
-    if (!api) return;
-
-    const onSelect = () => {
-      setCurrentIndex(api.selectedScrollSnap());
-    };
-
-    api.on("select", onSelect);
-    api.on("reInit", onSelect);
-
-    return () => {
-      api.off("select", onSelect);
-    };
-  }, [api]);
+  const [hoveredService, setHoveredService] = useState(null);
 
   const services = [
     {
+      id: "web",
       title: "Web Development",
       description: "Custom websites and applications",
-      bgColor: "bg-black",
-      type: "web" as const
+      icon: "🌐"
     },
     {
+      id: "uiux",
       title: "UI/UX Design",
       description: "Intuitive user experiences",
-      bgColor: "bg-zinc-900",
-      type: "uiux" as const
+      icon: "✨"
     },
     {
+      id: "mobile",
       title: "Mobile Apps",
       description: "iOS and Android solutions",
-      bgColor: "bg-black",
-      type: "mobile" as const
+      icon: "📱"
     },
     {
+      id: "software",
       title: "Custom Software",
       description: "Tailored to your needs",
-      bgColor: "bg-zinc-900",
-      type: "software" as const
+      icon: "💻"
     }
   ];
 
-  // Configure autoplay plugin
-  const autoplayPlugin = Autoplay({
-    delay: 4000,
-    stopOnInteraction: false,
-    stopOnMouseEnter: true,
-  });
-
   return (
-    <section className="bg-black text-white pt-32 pb-20 md:pt-40 md:pb-32">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="animate-on-scroll">
-            <p className="text-sm md:text-base mb-8 max-w-xs">
-              We're a tech company building digital products and services for the modern entrepreneur.
-            </p>
+    <section className="relative bg-gradient-to-b from-black to-gray-900 text-white min-h-screen flex items-center pt-16 pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.07]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)]" style={{ backgroundSize: '24px 24px' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 w-full relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left side - Hero text */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-xl"
+          >
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6"
+            >
+              Digital Solutions For Modern Businesses
+            </motion.div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight tracking-tight mb-12 md:mb-16">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight tracking-tight mb-6"
+            >
               Building
               <br />
-              <span className="relative">
+              <span className="relative inline-block">
                 digital
-                <svg className="absolute -bottom-2 w-full" viewBox="0 0 300 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1,15 C50,5 100,25 150,15 C200,5 250,15 299,8" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
-                </svg>
+                <motion.div 
+                  className="absolute -bottom-2 left-0 w-full h-1 bg-red-500 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.8, duration: 0.6 }}
+                />
               </span>
               <br />
               solutions.
-            </h1>
-          </div>
-          
-          <div className="relative w-full aspect-square max-w-2xl mx-auto md:mx-0 animate-on-scroll">
-            <Carousel
-              className="w-full"
-              setApi={setApi}
-              plugins={[autoplayPlugin]}
-              opts={{
-                loop: true,
-              }}
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="text-gray-300 text-lg mb-8 max-w-lg"
             >
-              <CarouselContent>
-                {services.map((service, index) => (
-                  <CarouselItem key={index}>
-                    <div className={cn(
-                      "flex flex-col h-full aspect-square rounded-lg p-8 text-white transition-all duration-500",
-                      service.bgColor,
-                      "hover:shadow-lg hover:shadow-white/10"
-                    )}>
-                      <div className="mb-4 p-6 rounded-full w-40 h-40 mx-auto">
-                        <AnimatedIllustration type={service.type} />
-                      </div>
-                      
-                      <h3 className="text-2xl font-display font-bold mb-2 text-center">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-300 text-center">
-                        {service.description}
-                      </p>
-                      
-                      <div className="mt-auto">
-                        <div className="h-px w-full bg-white/20 my-4"></div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-white/60">0{index + 1}</span>
-                          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex flex-col gap-4 mt-4">
-                <div className="flex justify-center gap-2 mb-2">
-                  {services.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => api?.scrollTo(index)}
-                      className={cn(
-                        "w-2.5 h-2.5 rounded-full transition-all",
-                        currentIndex === index 
-                          ? "bg-white scale-125" 
-                          : "bg-white/30 hover:bg-white/50"
-                      )}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
-                <div className="flex justify-end gap-2">
-                  <CarouselPrevious className="relative -left-0 bg-white/10 hover:bg-white/20 border-none text-white" />
-                  <CarouselNext className="relative -right-0 bg-white/10 hover:bg-white/20 border-none text-white" />
-                </div>
-              </div>
-            </Carousel>
-          </div>
+              We're a tech agency crafting cutting-edge digital products and services for the modern entrepreneur.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="flex flex-wrap gap-4"
+            >
+              <button  className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-opacity-90 transition-all shadow-lg shadow-white/20">
+               <a href="#contact"> Get Started</a>
+              </button>
+              <button className="px-6 py-3 border-2 border-white rounded-lg hover:bg-white/10 transition-all font-semibold">
+                <a href="#portfolio">View Our Work</a>
+              </button>
+            </motion.div>
+          </motion.div>
+          
+          {/* Right side - Services grid showcase */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
+              {services.map((service, index) => (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 * index, duration: 0.6 }}
+                  className={cn(
+                    "relative overflow-hidden rounded-2xl p-6 md:p-8",
+                    "bg-white/5 backdrop-blur-sm border border-white/10",
+                    "transition-all duration-300 cursor-pointer group hover:bg-white/10",
+                    hoveredService && hoveredService !== service.id ? "opacity-60" : ""
+                  )}
+                  onMouseEnter={() => setHoveredService(service.id)}
+                  onMouseLeave={() => setHoveredService(null)}
+                >
+                  {/* Service Icon */}
+                  {/* <div className="text-3xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                    {service.icon}
+                  </div> */}
+                  
+                  {/* Content */}
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-red-400 transition-colors">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-white/70 text-sm md:text-base group-hover:text-white transition-colors">
+                    {service.description}
+                  </p>
+                  
+                  {/* Hover accent */}
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-600/0 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-20 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-20 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl -z-10" />
     </section>
   );
 };
